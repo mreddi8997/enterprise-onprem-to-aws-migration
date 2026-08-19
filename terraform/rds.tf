@@ -4,12 +4,12 @@ resource "aws_db_instance" "postgredb" {
   storage_type         = "gp2"
   db_name              = "mydb"
   engine               = "postgres"
-  engine_version       = "14.15"
+  engine_version       = "14"
   instance_class       = "db.t3.micro"
   port                 = 5432
   publicly_accessible  = false
   db_subnet_group_name = aws_db_subnet_group.mydb_subnet_group.name
-  username             = "admin"
+  username             = "mohit"
   password             = "password"
   parameter_group_name = "default.postgres14"
   skip_final_snapshot  = true
