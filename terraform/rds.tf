@@ -21,7 +21,7 @@ resource "aws_db_instance" "postgredb" {
   deletion_protection        = false
   copy_tags_to_snapshot      = true
 
-  depends_on = [aws_db_subnet_group.mydb_subnet_group, aws_security_group.rds, aws_vpc.flask_vpc.id]
+  depends_on = [aws_db_subnet_group.mydb_subnet_group, aws_security_group.rds, aws_vpc.flask_vpc]
 }
 
 resource "aws_db_subnet_group" "mydb_subnet_group" {
