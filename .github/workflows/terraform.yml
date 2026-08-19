@@ -19,20 +19,21 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Print OIDC JWT Claims
-      run: |
-        OIDC_TOKEN=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-          "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
-        echo "=== DECODED JWT PAYLOAD ==="
-        echo "$OIDC_TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
-      
-
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: arn:aws:iam::431445718171:role/migration-role
         aws-region: us-east-2
         audience: sts.amazonaws.com
+
+    - name: Verify AWS Identity
+      run: |
+          aws sts get-caller-identity
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+          terraform_version: "1.10.0"
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
